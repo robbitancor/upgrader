@@ -33,6 +33,7 @@ class UpgradeAlert extends StatefulWidget {
     this.dialogKey,
     this.navigatorKey,
     this.child,
+    this.hideMessage = false
   }) : upgrader = upgrader ?? Upgrader.sharedInstance;
 
   /// The upgraders used to configure the upgrade dialog.
@@ -80,6 +81,9 @@ class UpgradeAlert extends StatefulWidget {
 
   /// The [child] contained by the widget.
   final Widget? child;
+
+  /// Hide prompt message
+  final bool hideMessage;
 
   @override
   UpgradeAlertState createState() => UpgradeAlertState();
@@ -145,7 +149,7 @@ class UpgradeAlertState extends State<UpgradeAlert> {
           key: widget.dialogKey ?? const Key('upgrader_alert_dialog'),
           context: context,
           title: appMessages.message(UpgraderMessage.title),
-          message: widget.upgrader.body(appMessages),
+          message: widget.hideMessage ? "" : widget.upgrader.body(appMessages),
           releaseNotes:
               shouldDisplayReleaseNotes ? widget.upgrader.releaseNotes : null,
           barrierDismissible: widget.barrierDismissible,
